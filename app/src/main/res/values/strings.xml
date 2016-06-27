@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">MyShotPut</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose">Choose</string>
+    <string name="notificationtitle">MyshotputNote</string>
+    <string name="pattern_alert_message">You might loose your old pattern shot locations.Hence do you want to change pattern? </string>
+    <string name="yes_button_msg">Yes</string>
+    <string name="no_button_msg">No</string>
+
+    <string-array name="minutes">
+        <item>Select</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+        <item>110</item>
+        <item>120</item>
+    </string-array>
+</resources>

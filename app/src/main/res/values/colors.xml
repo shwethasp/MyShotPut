@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white_color">#FFFFFF</color>
+    <color name="setupblue">#19435e</color>
+    <color name="green">#aed179</color>
+    <color name="darkgreen">#09a42d</color>
+    <color name="blue">#71d9e7</color>
+    <color name="darkblue">#3861e7</color>
+    <color name="plusdisable">#767674</color>
+    <color name="minusdisable">#767674</color>
+    <color name="screen_background">#f4f3f8</color>
+    <color name="dark_text">#333333</color>
+    <color name="light_gray">#d9d7d7</color>
+    <color name="button_text_color">#ffffff</color>
+    <color name="text_theme">#ffffff</color>
+
+</resources>
