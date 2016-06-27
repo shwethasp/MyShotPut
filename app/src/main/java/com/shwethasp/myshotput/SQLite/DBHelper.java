@@ -75,18 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // code to add the new time
-    public String insertTime(String time, int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TIME_COLUMN_TIME, time);
-        contentValues.put(TIME_COLUMN_BUTTONNAME, id);
-        // Inserting Row
-        long i = db.insert(TABLE_TIME, null, contentValues);
-        //2nd argument is String containing nullColumnHack
-        db.close(); // Closing database connection
-        return null;
-    }
+
 
     // code to add the new time
     public String insertShotTime(String time, int id) {
@@ -100,19 +89,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public String insertTimeInterval(String time, String interval, int id, boolean bool) {
-        // String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TIME_COLUMN_TIME, time);
-        contentValues.put(TIME_COLUMN_SPINNER, interval);
-        contentValues.put(TIME_COLUMN_BUTTONNAME, id);
-        contentValues.put(TIME_COLUMN_ISSHOTPUT, String.valueOf(bool));
-        long i = db.insert(TABLE_TIME, null, contentValues);
-        db.close(); // Closing database connection
-        return null;
-    }
 
     public String insertTimeInterval1(String time, String interval, int id) {
         // String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -128,19 +104,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public String insertInterval(String spinnervalue, int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TIME_COLUMN_SPINNER, spinnervalue);
-        contentValues.put(TIME_COLUMN_BUTTONNAME, id);
-
-        db.insert(TABLE_TIME, null, contentValues);
-        // db.insert(TABLE_TIME,contentValues, TIME_COLUMN_BUTTONNAME + "=?", new String[]{Integer.toString(id)});
-
-        db.close();
-
-        return null;
-    }
 
     public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -148,32 +111,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Cursor getShotData() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from " + TABLE_SHOTS, null);
-        return res;
-    }
 
-    public int numberOfRows() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_TIME);
-        return numRows;
-    }
 
     //code to update the single time
-    public int updateTime(int id, String time, boolean status) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TIME_COLUMN_TIME, time);
-        contentValues.put(TIME_COLUMN_BUTTONNAME, id);
-        contentValues.put(TIME_COLUMN_ISSHOTPUT, String.valueOf(status));
-        // updating row
-        int i = db.update(TABLE_TIME, contentValues, TIME_COLUMN_BUTTONNAME + " = ?",
-                new String[]{Integer.toString(id)});
-        return i;
-
-    }
-
     public int updateTime1(int id, String time) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -187,13 +127,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public int updateInterval(String spinnervalue, int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TIME_COLUMN_SPINNER, spinnervalue);
-        contentValues.put(TIME_COLUMN_BUTTONNAME, id);
-        return db.update(TABLE_TIME, contentValues, TIME_COLUMN_BUTTONNAME + "=?", new String[]{Integer.toString(id)});
-    }
+
     public int updateInterval1(String spinnervalue, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -202,22 +136,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.update(TABLE_TIME1, contentValues, TIME_COLUMN_BUTTONNAME + "=?", new String[]{Integer.toString(id)});
     }
 
-    public int updateShotTime(String time, int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(SHOTS_COLUMN_TIME, time);
-        contentValues.put(SHOTS_COLUMN_BUTTONNAME, id);
-        return db.update(TABLE_SHOTS, contentValues, SHOTS_COLUMN_BUTTONNAME + "=?", new String[]{Integer.toString(id)});
-    }
 
-    public int shotAcceptBeforeTime(String time, boolean bool) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        // contentValues.put(TIME_COLUMN_TIME,time);
-        contentValues.put(TIME_COLUMN_TIME, time);
-        contentValues.put(TIME_COLUMN_ISSHOTPUT, String.valueOf(bool));
-        return db.update(TABLE_TIME, contentValues, TIME_COLUMN_TIME + "=?", new String[]{time});
-    }
     public int shotAcceptBeforeTime1(String time) {
         String currentdate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         SQLiteDatabase db = this.getWritableDatabase();
@@ -228,43 +147,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.update(TABLE_TIME1, contentValues, TIME_COLUMN_TIME + "=?", new String[]{time});
     }
 
-    public int shotAcceptBeforeTimeDate(String time) {
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        // contentValues.put(TIME_COLUMN_TIME,time);
-        contentValues.put(TIME_COLUMN_TIME, time);
-        contentValues.put(TIME_COLUMN_DATE, date);
-        return db.update(TABLE_TIME1, contentValues, TIME_COLUMN_TIME + "=?", new String[]{time});
-    }
-
-    public String getTimeByButtonName(int id) {
-        String time = "Disabled";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = null;
-        try {
-            c = db.query(false, TABLE_TIME, new String[]{TIME_COLUMN_TIME}, TIME_COLUMN_BUTTONNAME + "=?", new String[]{String.valueOf(id)}, null,
-                    null, null, null, null);
-
-            if (c != null) {
-                if (c.moveToFirst()) {
-                    do {
-
-                        time = c.getString(c.getColumnIndex(TIME_COLUMN_TIME));
-
-                    } while (c.moveToNext());
-                }
-            }
-        } catch (Exception e) {
-            Log.e("getTimeByButtonName Exception", e.getMessage().toString());
-
-        } finally {
-            c.close();
-            db.close();
-        }
-
-        return time;
-    }
 
     public String getTimeByButtonName1(int id) {
         String time = "Disabled";
@@ -293,33 +175,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return time;
     }
-    public String getIntervalByButtonName(int id) {
-        String spinnervalue = "";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = null;
-        try {
-            c = db.query(false, TABLE_TIME, new String[]{TIME_COLUMN_SPINNER}, TIME_COLUMN_BUTTONNAME + "=?", new String[]{String.valueOf(id)}, null,
-                    null, null, null, null);
 
-            if (c != null) {
-                if (c.moveToFirst()) {
-                    do {
-
-                        spinnervalue = c.getString(c.getColumnIndex(TIME_COLUMN_SPINNER));
-
-                    } while (c.moveToNext());
-                }
-            }
-        } catch (Exception e) {
-            Log.e("getIntervalByButtonName Exception", e.getMessage().toString());
-
-        } finally {
-            c.close();
-            db.close();
-        }
-
-        return spinnervalue;
-    }
     public String getIntervalByButtonName1(int id) {
         String spinnervalue = "";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -399,80 +255,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return listTime;
     }
 
-    public ArrayList<String> getAllTimeBydate() {
-          // String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        ArrayList<String> listTime = new ArrayList<String>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = null;
-        try {
-//            c = db.query(false, TABLE_TIME, null, null, null, null, null, null, null, null);
-            c = db.query(false, TABLE_TIME1, new String[]{TIME_COLUMN_TIME}, TIME_COLUMN_DATE + "=?", new String[]{String.valueOf("0")}, null,
-                    null, null, null, null);
-            if (c != null) {
-                if (c.moveToFirst()) {
-                    do {
 
-                        listTime.add(c.getString(c.getColumnIndex(TIME_COLUMN_TIME)));
-                    } while (c.moveToNext());
-                }
-            }
-        } finally {
-            c.close();
-            db.close();
-        }
-        return listTime;
-    }
 
-    public ArrayList<String> getAllTimeByboolean(boolean b) {
-        ArrayList<String> listTime = new ArrayList<String>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = null;
-        try {
-//            c = db.query(false, TABLE_TIME, null, null, null, null, null, null, null, null);
-            c = db.query(false, TABLE_TIME, new String[]{TIME_COLUMN_TIME}, TIME_COLUMN_ISSHOTPUT + "=?", new String[]{String.valueOf(b)}, null,
-                    null, null, null, null);
-            if (c != null) {
-                if (c.moveToFirst()) {
-                    do {
-
-                        listTime.add(c.getString(c.getColumnIndex(TIME_COLUMN_TIME)));
-                    } while (c.moveToNext());
-                }
-            }
-        } finally {
-            c.close();
-            db.close();
-        }
-        return listTime;
-    }
-
-    /**
-     * Getting all labels
-     * returns list of labels
-     */
-    public List<String> getAllIntervals() {
-        List<String> labels = new ArrayList<String>();
-
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_TIME;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                labels.add(cursor.getString(1));
-            } while (cursor.moveToNext());
-        }
-
-        // closing connection
-        cursor.close();
-        db.close();
-
-        // returning lables
-        return labels;
-    }
 
     public List<ModelDateTime> getAllTimeDate() {
         ArrayList<ModelDateTime> labels = new ArrayList<ModelDateTime>();
@@ -501,61 +285,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return labels;
     }
 
-    public List<ModelDateTime> getAllTimeDateBySetUp() {
-        ArrayList<ModelDateTime> labels = new ArrayList<ModelDateTime>();
 
-        // Select All Query
-        String selectQuery = "SELECT " + TIME_COLUMN_TIME + "," + TIME_COLUMN_DATE + " FROM " + TABLE_TIME1;
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                ModelDateTime modelDateTime = new ModelDateTime();
-                modelDateTime.setTime(cursor.getString(0));
-                modelDateTime.setDate(cursor.getString(1));
-                labels.add(modelDateTime);
-            } while (cursor.moveToNext());
-        }
-
-        // closing connection
-        cursor.close();
-        db.close();
-
-        // returning lables
-        return labels;
-    }
-
-    public String getIntervalbyTime(String time) {
-        String value = "";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = null;
-        try {
-            c = db.query(false, TABLE_TIME, new String[]{TIME_COLUMN_SPINNER}, TIME_COLUMN_TIME + "=?", new String[]{String.valueOf(time)}, null,
-                    null, null, null, null);
-
-            if (c != null) {
-                if (c.moveToFirst()) {
-                    do {
-
-                        value = c.getString(c.getColumnIndex(TIME_COLUMN_SPINNER));
-
-                    } while (c.moveToNext());
-                }
-            }
-        } catch (Exception e) {
-            Log.e("getIntervalbybuttonid Exception", e.getMessage().toString());
-
-        } finally {
-            c.close();
-            db.close();
-        }
-
-        return value;
-
-    }
     public String getIntervalbyTime1(String time) {
         String value = "";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -585,11 +316,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void deleteTime(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_TIME, TIME_COLUMN_BUTTONNAME + " = ?",
-                new String[]{Integer.toString(id)});
-    }
     public void deleteTime1(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TIME1, TIME_COLUMN_BUTTONNAME + " = ?",

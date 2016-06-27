@@ -83,9 +83,7 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
 
     public static Switch mSwitchNotify, mSwitchSound, mSwitchLock;
     private static final SetupActivity mSetupActivity = new SetupActivity();
-    //  SetupActivity mSetupActivity = new SetupActivity();
-    private PendingIntent pendingIntent;
-    private AlarmManager alarmManager;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -241,8 +239,6 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        //   Intent alarmIntent = new Intent(this, BroadcastManager.class);
-        //   pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
 
     }
 
@@ -290,7 +286,7 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
                                 }, pHour, pMinute, false);
 
             case TIME_DIALOG_ID3:
-                //  final String date2 = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
                 int selectedPosition3 = spinner3.getSelectedItemPosition();
                 final String spin3 = str[selectedPosition3].toString();
                 return new TimePickerDialog(this,
@@ -308,7 +304,6 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
                                 }, pHour, pMinute, false);
 
             case TIME_DIALOG_ID4:
-                //  final String date3 = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 int selectedPosition4 = spinner4.getSelectedItemPosition();
                 final String spin4 = str[selectedPosition4].toString();
                 return new TimePickerDialog(this,
@@ -326,7 +321,6 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
                                 }, pHour, pMinute, false);
 
             case TIME_DIALOG_ID5:
-                //  final String date4 = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 int selectedPosition5 = spinner5.getSelectedItemPosition();
                 final String spin5 = str[selectedPosition5].toString();
                 return new TimePickerDialog(this,
@@ -352,23 +346,16 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
      */
     private void updateDisplay(String time, String interval, int id) {
         final String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        // ArrayList<String> mArrayAllTime = db.getAllTime();
-        //  if (mArrayAllTime.size() == 0) {
+
         ArrayList<ModelDateTime> mArrayAllTime = (ArrayList<ModelDateTime>) db.getAllTimeDate();
         if (mArrayAllTime.size() == 0) {
             if (id == 0) {
                 pickTime1.setText(time);
                 if (db.getTimeByButtonName1(id).contentEquals("Disabled")) {
-                    //
-                    //   String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                    //  StringBuilder mStringBuilder = new StringBuilder();
-                    //  mStringBuilder.append(time);
-                    //   mStringBuilder.append(date);
-//                    db.insertTimeInterval(time, interval, id,false);
                     db.insertTimeInterval1(time, interval, id);
 
                 } else {
-//                    db.updateTime(id, time,false);
+
                     db.updateTime1(id, time);
 
                 }
@@ -376,11 +363,10 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
             } else if (id == 1) {
                 pickTime2.setText(time);
                 if (db.getTimeByButtonName1(id).contentEquals("Disabled")) {
-//                    db.insertTimeInterval(time, interval, id,false);
+
                     db.insertTimeInterval1(time, interval, id);
 
                 } else {
-//                    db.updateTime(id, time,false);
                     db.updateTime1(id, time);
 
                 }
@@ -432,12 +418,9 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     pickTime1.setText(time);
                     if (db.getTimeByButtonName1(id).contentEquals("Disabled")) {
-//                        db.insertTimeInterval(time, interval, id,false);
-
                         db.insertTimeInterval1(time, interval, id);
 
                     } else {
-//                        db.updateTime(id, time,false);
                         db.updateTime1(id, time);
 
 
@@ -449,11 +432,9 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     pickTime2.setText(time);
                     if (db.getTimeByButtonName1(id).contentEquals("Disabled")) {
-//                        db.insertTimeInterval(time, interval, id,false);
                         db.insertTimeInterval1(time, interval, id);
 
                     } else {
-//                        db.updateTime(id, time,false);
                         db.updateTime1(id, time);
 
                     }
@@ -501,29 +482,7 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
             //added extra
         } else if (MainActivity.result.size() != 0) {
             if (isnotifyONclicked) {
-                //  if (MainActivity.mContext != null) {
 
-                // Intent alarmIntent = new Intent(this, BroadcastManager.class);
-                /*Intent alarmIntent = new Intent(this, MyService.class);
-                // pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                pendingIntent = PendingIntent.getService(this, 0, alarmIntent, 0);
-                //alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                //at specific time
-                if (AlarmTime() != 0) {
-//                    startService(new Intent(getBaseContext(), MyAlarmService.class)); //for checking purpose
-                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, AlarmTime(), 10000, pendingIntent);
-                    //  alarmManager.set(AlarmManager.RTC_WAKEUP, AlarmTime(), pendingIntent);
-                  *//*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                                AlarmTime(), pendingIntent);
-                    }*//*
-          *//*  Toast.makeText(getApplicationContext(),
-                    "Broadcast Receiver Started", Toast.LENGTH_LONG)
-                    .show();*//*
-                    Log.e("Broadcast Receiver Started", String.valueOf(AlarmTime()));
-
-                }*/
             }
         }
     }
@@ -538,28 +497,6 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
         return calendar.getTimeInMillis();
     }
 
-    private long ConvertTimescurrent(String str) {
-        Date mBeforeDate = null;
-        int mHours = 0, mMinutes = 0;
-        if (str.charAt(0) == '0') {
-            mHours = Integer.parseInt(String.valueOf(str.charAt(1)));
-        } else {
-            mHours = Integer.parseInt(str.substring(0, str.indexOf(":")));
-        }
-
-        if (str.charAt(3) == '0') {
-            mMinutes = Integer.parseInt(String.valueOf(str.charAt(4)));
-        } else {
-            mMinutes = Integer.parseInt(str.substring(3, 5));
-        }
-
-        Date dt = new Date();
-        dt.setHours(mHours);
-        dt.setMinutes(mMinutes);
-
-        Date B = dt;
-        return B.getTime();
-    }
 
     private long CurrentTime() {
         long time = System.currentTimeMillis();
@@ -573,158 +510,6 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
 
     public static SetupActivity getInstance() {
         return mSetupActivity;
-    }
-
-    public long AlarmTime() {
-        // mSetupActivity =this;
-        db = new DBHelper(this);
-        ArrayList<ModelDateTime> notiArrayList1 = (ArrayList<ModelDateTime>) db.getAllTimeDate();
-        if (notiArrayList1.size() == 0) {
-            MainActivity.timedisplaytext.setText("OK, for current shotput is Disabled,Enable or Exit");
-        } else if (notiArrayList1.size() != 0) {
-            notiArrayList = new ArrayList<String>();
-            for (int d = 0; d < notiArrayList1.size(); d++) {
-                Log.e(" time is ", notiArrayList1.get(d).getTime());
-                Log.e("date is ", notiArrayList1.get(d).getDate());
-                String currentdate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                String strDate1 = currentdate;
-                String strDate2 = notiArrayList1.get(d).getDate();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date currentdates = null;
-                try {
-                    currentdates = sdf.parse(strDate1);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Date appdate = null;
-                try {
-                    appdate = sdf.parse(strDate2);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                if (notiArrayList1.get(d).getDate().equals("0") || appdate.before(currentdates)) {
-
-                    notiArrayList.add(notiArrayList1.get(d).getTime());
-                }
-                //  mArrayList = db.getAllTimeBydate();
-            }
-            if (notiArrayList.size() != 0)
-                Collections.sort(notiArrayList);
-            ascending = new ArrayList<String>();
-            for (int i = 0; i < notiArrayList.size(); i++) {
-                String store = notiArrayList.get(i);
-
-           /* if((new Date(ConvertTimes(store)).equals(new Date(CurrentTime())))){
-                ascending.add(store);
-            }*/
-                String checkTime = new SimpleDateFormat("HH:mm").format(new Date());
-
-                if (new Date(ConvertTimes(store)).after(new Date(CurrentTime()))) {
-                    ascending.add(store);
-                    Log.e("notification greater array list", store);
-                }
-                if (checkTime.contentEquals(store)) {
-                    ascending.add(store);
-                }
-            }
-            if (ascending.size() != 0)
-                Collections.sort(ascending);
-
-            ArrayList<String> greater = new ArrayList<String>();
-            if (ascending.size() == 0) {
-            } else {
-                for (int j = 0; j < ascending.size(); j++) {
-                    Log.e("sorted greater values", ascending.get(j));
-                }
-            }
-        }
-
-        // ArrayList<String> notiArrayList = db.getAllTime();
-
-        // Calendar calendar = Calendar.getInstance();
-        String mPickTime;
-        if (ascending.size() != 0)
-            mPickTime = ascending.get(0).toString();
-        else
-            mPickTime = "Disabled";
-        String spinner = db.getIntervalbyTime1(mPickTime).toString();
-        //   if (!spinner.contentEquals("Select")) {
-        Date mBeforeDate = null;
-        if (!mPickTime.contentEquals("Disabled") && !spinner.contentEquals("Select")) {
-            int mHours = 0, mMinutes = 0;
-            if (mPickTime.charAt(0) == '0') {
-                mHours = Integer.parseInt(String.valueOf(mPickTime.charAt(1)));
-            } else {
-                mHours = Integer.parseInt(mPickTime.substring(0, mPickTime.indexOf(":")));
-            }
-
-            if (mPickTime.charAt(3) == '0') {
-                mMinutes = Integer.parseInt(String.valueOf(mPickTime.charAt(4)));
-            } else {
-                //mMinutes = Integer.parseInt(mPickTime.substring((mPickTime.indexOf(':') + 1), mPickTime.length()));
-                //  mMinutes = Integer.parseInt(mPickTime.substring(3, 4));
-                mMinutes = Integer.parseInt(mPickTime.substring(3, 5));
-            }
-
-            Date dt = new Date();
-            dt.setHours(mHours);
-            dt.setMinutes(mMinutes);
-
-            Date B = dt;
-            //   Date A = dt;
-            //check if it is greater than current time
-
-
-            mBeforeDate = new Date(B.getTime() - TimeUnit.MINUTES.toMillis(Integer.parseInt(spinner)));
-            //Current Time
-            String checkTime = new SimpleDateFormat("HH:mm").format(new Date());
-            String beforedate = new SimpleDateFormat("HH:mm").format(mBeforeDate);
-            if (checkTime.contentEquals(beforedate)) {
-
-
-
-
-           /* char[] sTime = picktime.toString().toCharArray();
-            char[] iTime = spinner.toString().toCharArray();
-
-            if (sTime[0] == '0') {
-                calendar.set(Calendar.HOUR_OF_DAY, sTime[1]);
-            } else {
-                String tmp = "";
-                tmp += sTime[0];
-                tmp += sTime[1];
-
-                int hour = Integer.parseInt(tmp);
-
-                calendar.set(Calendar.HOUR_OF_DAY, hour);
-            }
-
-            if (sTime[3] == '0' && iTime[0] == '0') {
-                calendar.set(Calendar.MINUTE, sTime[4] - iTime[1]);
-            } else {
-                String tmp = "";
-                tmp += sTime[3] - iTime[0];
-                tmp += sTime[4] - iTime[1];
-
-                int minute = Integer.parseInt(tmp);
-
-                calendar.set(Calendar.MINUTE, minute);
-
-            }
-            calendar.set(Calendar.SECOND, 0);
-            return calendar.getTimeInMillis();*/
-
-        /* else {
-            return 0;
-        }*/
-                // return 0;
-                return mBeforeDate.getTime();
-            } else {
-
-            }
-        }
-        return 0;
     }
 
 

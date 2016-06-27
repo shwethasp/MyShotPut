@@ -17,6 +17,5 @@ public class ModelClass {
     public static final String images = "images";
 public static  final String nextImage = "nextImage";
     public static  final String nextPatternRoundImage = "nextPatternRoundImage";
-    public static final String shotaccept= "shotaccept";
 
 }

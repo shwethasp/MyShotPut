@@ -57,13 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CircleLayout circleLayout;
     boolean isPatternclicked = false;
     Dialog mPatternPlusDialog, mPatternMinusDialog;
-    boolean patternplusclicked = false;
-    boolean patternminusclicked = false;
     boolean isStart = false;
     boolean onLaunch = false;
-    boolean onLaunch1 = false;
 
-    private static int countvalue = 0;
 
     public static ImageView imageView1, imageView2, imageView3, imageView4, imageView5,
             imageView6, imageView7, imageView8, imageView9, imageView10,
@@ -292,42 +288,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-       /* Intent intents=new Intent("MyBroadcast");
-        intents.setClass(this, BroadcastManager.class);
-        this.sendBroadcast(intents);*/
-
-       /* // Retrieve a PendingIntent that will perform a broadcast
-        Intent alarmIntent = new Intent(this, BroadcastManager.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
-       */
-
-        /*if (result == null || result.size() == 0) {
-            //added extra
-        } else if (result.size() != 0) {
-            if (SetupActivity.isnotifyONclicked) {
-                //  if (MainActivity.mContext != null) {
-
-                Intent alarmIntent = new Intent(this, BroadcastManager.class);
-                pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                //at specific time
-                if (AlarmTime() != 0) {
-                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, AlarmTime(),10000, pendingIntent);
-                    Log.e("Broadcast Receiver Started", String.valueOf(AlarmTime()));
-
-                }
-            }
-        }*/
         startService(new Intent(getBaseContext(), MyService.class));
 
-        //startService(new Intent(this, MyAlarmService.class));
+
     }
- /*   // broadcast a custom intent.
-    public void broadcastIntent(View view) {
-        Intent intent = new Intent();
-        intent.setAction("MyBroadcast");
-        sendBroadcast(intent);
-    }*/
+
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -526,7 +491,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.patterndownimage5:
                 if ((Integer) patterndownimage5.getTag() == R.drawable.round) {
                     patterndownimage5.setImageDrawable(getResources().getDrawable(R.drawable.roundred));
-                    // isbuttonRed = true;
                     patterndownimage5.setTag(R.drawable.roundred);
                     if ((Integer) patterndownimage5.getTag() == R.drawable.roundred) {
                         if (db.getTimeHistory(2) == "") {
@@ -2357,63 +2321,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return calendar.getTimeInMillis();
     }
 
-    private String CurrentTimeCurrent() {
-        Calendar c = Calendar.getInstance();
-
-        SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
-        Date now = new Date();
-        String strTime = sdfTime.format(now);
-
-       /* //Current Time
-        Date checkTime = new Date("HH:mm");
-        Calendar calendar3 = Calendar.getInstance();
-        calendar3.setTime(checkTime);
-        Date actualTime = calendar3.getTime();*/
-      /*  try {
-            Date inTime = sdfTime.parse(strTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
-
-     /*   try {
-            SimpleDateFormat sd = new SimpleDateFormat("HH:mm");
-            Date d = sd.parse(c.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
-        return strTime;
-    }
-
-    private Date ConvertTimescurrent(String str) {
-        Date mBeforeDate = null;
-        int mHours = 0, mMinutes = 0;
-        if (str.charAt(0) == '0') {
-            mHours = Integer.parseInt(String.valueOf(str.charAt(1)));
-        } else {
-            mHours = Integer.parseInt(str.substring(0, str.indexOf(":")));
-        }
-
-        if (str.charAt(3) == '0') {
-            mMinutes = Integer.parseInt(String.valueOf(str.charAt(4)));
-        } else {
-            mMinutes = Integer.parseInt(str.substring(3, 5));
-        }
-
-        Date dt = new Date();
-        dt.setHours(mHours);
-        dt.setMinutes(mMinutes);
-
-        Date B = dt;
-        /*Date currenttime = new Date();
-        Date a = new Date(B.getTime() - Integer.parseInt(String.valueOf(currenttime)));
-        if (Integer.parseInt(String.valueOf(a)) == 0) {
-            return String.valueOf(a);
-        }
-        return String.valueOf(B.getTime());*/
-        return B;
-    }
-
     private void compareDates() {
 
         String mPickTime = result.get(0).toString();
@@ -2431,8 +2338,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mPickTime.charAt(3) == '0') {
                 mMinutes = Integer.parseInt(String.valueOf(mPickTime.charAt(4)));
             } else {
-                //mMinutes = Integer.parseInt(mPickTime.substring((mPickTime.indexOf(':') + 1), mPickTime.length()));
-                //  mMinutes = Integer.parseInt(mPickTime.substring(3, 4));
                 mMinutes = Integer.parseInt(mPickTime.substring(3, 5));
             }
 
@@ -2480,11 +2385,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 onLaunch = true;
-                //onLaunch1 = false;
+
 
             } else {
-                //   timedisplaytext.setText("It’s too early for your next ShotPut at " + sharedpreferences.getString(ModelClass.Time, ""));
-//            if (ShotAceeptBeforeTime == false) {
+
                 timedisplaytext.setText("Your next scheduled shotput is at " + result.get(0));
                 faces.setImageResource(R.drawable.sadface);
                 if (SetupActivity.isSoundONclicked) {
@@ -2518,7 +2422,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
                 onLaunch = true;
-                //  onLaunch = false;
             }
         }
 
@@ -2530,13 +2433,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             curntImg.setTag(R.drawable.roundyellow);
             nxtImg.setImageResource(R.drawable.roundviolet);
             nxtImg.setTag(R.drawable.roundviolet);
-            // ShotAceeptBeforeTime = true;
-            //   curntImg.setTag(R.drawable.round);
-            //nxtImg.setTag(R.drawable.round);
+
             timedisplaytext.setText("Shotput Accepted");
             // timedisplaytext.setText("Your next shotput is expected at " +result.get(1));
             faces.setImageResource(R.drawable.sleepingface);
-//            SharedPreferences prefs = getSharedPreferences("prf", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putInt(ModelClass.nextImage, nxtImg.getId());
             editor.apply();
@@ -2564,10 +2464,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             curntImg.setImageResource(R.drawable.roundyellow);
             curntImg.setTag(R.drawable.roundyellow);
             nxtImg.setImageResource(R.drawable.roundviolet);
-            //curntImg.setTag(R.drawable.round);
-            nxtImg.setTag(R.drawable.roundviolet);//checking purpose
-            //nxtImg.setTag(R.drawable.roundred);//uncomment the proper one
-            //  ShotAceeptBeforeTime = true;
+            nxtImg.setTag(R.drawable.roundviolet);
+
             timedisplaytext.setText("Shotput Accepted");
 
             SharedPreferences.Editor nextImg = sharedpreferences.edit();
@@ -2597,9 +2495,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (result != null)
             if (result.size() != 0)
                 db.shotAcceptBeforeTime1(result.get(0));
-
-//                timedisplaytext.setText("shot next is "+result.get(1));
-        //  mArrayList = db.getAllTimeByboolean(false);
         mTimeDateArray = (ArrayList<ModelDateTime>) db.getAllTimeDate();
         if (mTimeDateArray.size() == 0) {
             timedisplaytext.setText("OK, for current shotput is Disabled,Enable or Exit");
@@ -2630,7 +2525,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (mTimeDateArray.get(d).getDate().equals("0") || appdate.before(currentdates)) {
 
                     datearray.add(mTimeDateArray.get(d).getTime());
-                    //  mArrayList = db.getAllTimeBydate();
 
                 }
 
@@ -2644,13 +2538,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 a = datearray.get(i);
 
                 //Current Time
-
                 String checkTime = new SimpleDateFormat("HH:mm").format(new Date());
 
-//  new Date(CurrentTimeCurrent()).compareTo(new Date(ConvertTimescurrent(a))) == 0)
                 if ((new Date(ConvertTimes(a)).after(new Date(CurrentTime())))) {
-                    // new Date(ConvertTimes(a)).equals(new Date(CurrentTime()))) {
-                    //   boolean x = currentTime.equals(ConvertTimescurrent(a));
                     result.add(a);
                     Log.e("greater array list", a);
                     Log.e("current time", String.valueOf(time));
@@ -2685,13 +2575,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             curntImg.setTag(R.drawable.roundyellow);
             nxtImg.setImageResource(R.drawable.roundviolet);
             nxtImg.setTag(R.drawable.roundviolet);
-            // ShotAceeptBeforeTime = true;
-            //   curntImg.setTag(R.drawable.round);
-            //nxtImg.setTag(R.drawable.round);
             timedisplaytext.setText("Shotput Accepted");
-            // timedisplaytext.setText("Your next shotput is expected at " +result.get(1));
+
             faces.setImageResource(R.drawable.sleepingface);
-//            SharedPreferences prefs = getSharedPreferences("prf", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putInt(ModelClass.nextPatternRoundImage, nxtImg.getId());
             editor.apply();
@@ -2719,10 +2605,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             curntImg.setImageResource(R.drawable.roundyellow);
             curntImg.setTag(R.drawable.roundyellow);
             nxtImg.setImageResource(R.drawable.roundviolet);
-            //curntImg.setTag(R.drawable.round);
-            nxtImg.setTag(R.drawable.roundviolet);//checking purpose
-            //nxtImg.setTag(R.drawable.roundred);//uncomment the proper one
-            //  ShotAceeptBeforeTime = true;
+            nxtImg.setTag(R.drawable.roundviolet);
+
             timedisplaytext.setText("Shotput Accepted");
 
             SharedPreferences.Editor nextImg = sharedpreferences.edit();
@@ -2752,9 +2636,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (result != null)
             if (result.size() != 0)
                 db.shotAcceptBeforeTime1(result.get(0));
-
-//                timedisplaytext.setText("shot next is "+result.get(1));
-        //  mArrayList = db.getAllTimeByboolean(false);
         mTimeDateArray = (ArrayList<ModelDateTime>) db.getAllTimeDate();// dont take all dates
         if (mTimeDateArray.size() == 0) {
             timedisplaytext.setText("OK, for current shotput is Disabled,Enable or Exit");
@@ -2785,24 +2666,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (mTimeDateArray.get(d).getDate().equals("0") || appdate.before(currentdates)) {
 
                     datearray.add(mTimeDateArray.get(d).getTime());
-                    //  mArrayList = db.getAllTimeBydate();
-
                 }
                 //Current Time
                 String checkTime = new SimpleDateFormat("HH:mm").format(new Date());
-           /*     Date checkTime = null;
-                try {
-                    checkTime = new SimpleDateFormat("HH:mm").parse(CurrentTimeCurrent());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Calendar calendar3 = Calendar.getInstance();
-                calendar3.setTime(checkTime);
-                Date actualTime = calendar3.getTime();
-              *//*  if(actualTime.compareTo(new Date(ConvertTimes(a))) == 0) {
-                    actualTime.getTime();
-                }*//*
-*/
 
                 if (checkTime.contentEquals(a)) {
                     result.add(a);
@@ -2819,21 +2685,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("ascending", datearray.get(i));
                 a = datearray.get(i);
                 //Current Time
-//                Date checkTime = null;
                 String checkTime = new SimpleDateFormat("HH:mm").format(new Date());
-
-                /*Calendar calendar3 = Calendar.getInstance();
-                calendar3.setTime(checkTime);
-                Date actualTime = calendar3.getTime();*/
-              /*  if(actualTime.compareTo(new Date(ConvertTimes(a))) == 0) {
-                    actualTime.getTime();
-                }*/
 
 
                 if ((new Date(ConvertTimes(a)).after(new Date(CurrentTime())))) {
-                    //   new Date(ConvertTimes(a)).equals(new Date(CurrentTime()))) {
-                    // new Date(CurrentTimeCurrent()).compareTo(new Date(ConvertTimescurrent(a))) == 0) {
-                    //   boolean x = currentTime.equals(ConvertTimescurrent(a));
                     result.add(a);
                     Log.e("greater array list", a);
                     Log.e("current time", String.valueOf(time));
@@ -2889,69 +2744,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private long AlarmTime() {
-        String mPickTime;
-        if (result.size() != 0)
-            mPickTime = result.get(0).toString();
-        else
-            mPickTime = "Disabled";
-        String spinner = db.getIntervalbyTime1(mPickTime).toString();
-        //   if (!spinner.contentEquals("Select")) {
-        Date mBeforeDate = null;
-        if (!mPickTime.contentEquals("Disabled") && !spinner.contentEquals("Select")) {
-            int mHours = 0, mMinutes = 0;
-            if (mPickTime.charAt(0) == '0') {
-                mHours = Integer.parseInt(String.valueOf(mPickTime.charAt(1)));
-            } else {
-                mHours = Integer.parseInt(mPickTime.substring(0, mPickTime.indexOf(":")));
-            }
-
-            if (mPickTime.charAt(3) == '0') {
-                mMinutes = Integer.parseInt(String.valueOf(mPickTime.charAt(4)));
-            } else {
-                //mMinutes = Integer.parseInt(mPickTime.substring((mPickTime.indexOf(':') + 1), mPickTime.length()));
-                //  mMinutes = Integer.parseInt(mPickTime.substring(3, 4));
-                mMinutes = Integer.parseInt(mPickTime.substring(3, 5));
-            }
-
-            Date dt = new Date();
-            dt.setHours(mHours);
-            dt.setMinutes(mMinutes);
-
-            Date B = dt;
-            //   Date A = dt;
-            //check if it is greater than current time
-
-
-            mBeforeDate = new Date(B.getTime() - TimeUnit.MINUTES.toMillis(Integer.parseInt(spinner)));
-            //Current Time
-            String checkTime = new SimpleDateFormat("HH:mm").format(new Date());
-            String beforedate = new SimpleDateFormat("HH:mm").format(mBeforeDate);
-            if (checkTime.contentEquals(beforedate)) {
-                return mBeforeDate.getTime();
-            } else {
-
-            }
-        }
-        return 0;
-    }
-
-/*
-    private void activityMinusDialog() {
-        mPatternMinusDialog = new Dialog(this);
-        mPatternMinusDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mPatternMinusDialog.setContentView(R.layout.patternminus_dialog);
-        mPatternMinusDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mPatternMinusDialog.setCancelable(false);
-
-        PatternDialogTitle = (TextView) mPatternMinusDialog.findViewById(R.id.dialog_title);
-        dialog_cancel = (Button) mPatternMinusDialog.findViewById(R.id.dialog_no);
-        dialog_yes = (Button) mPatternMinusDialog.findViewById(R.id.dialog_yes);
-
-        dialog_cancel.setOnClickListener(this);
-        dialog_yes.setOnClickListener(this);
-    }*/
-
     public void onResume() {
         super.onResume();
         int nextpattern = sharedpreferences.getInt(ModelClass.nextPatternRoundImage, 0);
@@ -2979,15 +2771,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (next != 0) {
             nextimg = (ImageView) findViewById(next);
-//            nextimg.setId(next);
             nextimg.setImageResource(R.drawable.roundviolet);
             nextimg.setTag(R.drawable.roundviolet);
-           /* if((Integer)patternupimage14.getTag()==R.drawable.round && patterndownimage7.getTag()==R.drawable.roundviolet){
-                patterndownimage7.setImageResource(R.drawable.round);
-            }*/
+
 
             if ((Integer) patterndownimage7.getTag() == R.drawable.roundviolet) {
-                //  if ((Integer)nextimg.getTag() != R.drawable.roundviolet) {
                 patterndownimage7.setImageResource(R.drawable.roundviolet);
                 patterndownimage7.setTag(R.drawable.roundviolet);
 
@@ -3032,20 +2820,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             patternplus.setVisibility(View.VISIBLE);
         }
 
-        String time1 = db.getTimeByButtonName1(SetupActivity.TIME_DIALOG_ID1);
-        String time2 = db.getTimeByButtonName1(SetupActivity.TIME_DIALOG_ID2);
-        String time3 = db.getTimeByButtonName1(SetupActivity.TIME_DIALOG_ID3);
-        String time4 = db.getTimeByButtonName1(SetupActivity.TIME_DIALOG_ID4);
-        String time5 = db.getTimeByButtonName1(SetupActivity.TIME_DIALOG_ID5);
-
-        String spin1 = db.getIntervalByButtonName1(0);
-        String spin2 = db.getIntervalByButtonName1(1);
-        String spin3 = db.getIntervalByButtonName1(2);
-        String spin4 = db.getIntervalByButtonName1(3);
-        String spin5 = db.getIntervalByButtonName1(4);
 
 //TODO:  compairing all saved times in buttons
-        // String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         mTimeDateArray = (ArrayList<ModelDateTime>) db.getAllTimeDate();
 
 
@@ -3053,7 +2829,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             timedisplaytext.setText("OK, for current shotput is Disabled,Enable or Exit");
         } else if (mTimeDateArray.size() != 0) {
             mArrayList = new ArrayList<String>();
-//            datearray = new ArrayList<String>();
             for (d = 0; d < mTimeDateArray.size(); d++) {
                 Log.e(" time is ", mTimeDateArray.get(d).getTime());
                 Log.e("date is ", mTimeDateArray.get(d).getDate());
@@ -3089,24 +2864,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {
                 Log.e("ascending", mArrayList.get(i));
                 a = mArrayList.get(i);
-// for 12.00 AM ==00:00 cannot span midnight(checks here)
-
-
-                //  new Date(ConvertTimescurrent(a)).equals(CurrentTimeCurrent()))
                 if ((new Date(ConvertTimes(a)).after(new Date(CurrentTime())))) {
 
-                    //   CurrentTimeCurrent().compareTo(new Date(ConvertTimes(a))) == 0){
-                    //   new Date(ConvertTimes(a)).equals(new Date(CurrentTime()))) {
-                    //       new Date(CurrentTimeCurrent()).compareTo(new Date(ConvertTimescurrent(a))) == 0) {
                     result.add(a);
                     Log.e("greater array list", a);
                     Log.e("current time", String.valueOf(time));
                 }
                 //Current Time
                 String checkTime = new SimpleDateFormat("HH:mm").format(new Date());
-              /*  if(actualTime.compareTo(new Date(ConvertTimes(a))) == 0) {
-                    actualTime.getTime();
-                }*/
                 if (checkTime.contentEquals(a)) {
                     result.add(a);
                     Log.e("greater array list", a);
@@ -3128,40 +2893,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         }
-        //    registerReceiver(new BroadcastManager(), SendNotification());
 
-
-    /*    if (result == null || result.size() == 0) {
-            //added extra
-        } else if (result.size() != 0) {
-            if (SetupActivity.isnotifyONclicked) {
-                //  if (MainActivity.mContext != null) {
-
-                Intent alarmIntent = new Intent(this, BroadcastManager.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                //at specific time
-                if (AlarmTime() != 0){
-                    //   AlarmTime();
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, AlarmTime(), pendingIntent);
-          *//*  Toast.makeText(getApplicationContext(),
-                    "Broadcast Receiver Started", Toast.LENGTH_LONG)
-                    .show();*//*
-
-                }
-            }
-        }*/
-         /*Intent intents=new Intent("MyBroadcast");
-        intents.setClass(this, BroadcastManager.class);
-        this.sendBroadcast(intents);*/
-
-    }
-
-    public IntentFilter SendNotification() {
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("MyBroadcast");
-
-        return intentFilter;
     }
 
 }
